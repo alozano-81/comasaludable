@@ -55,9 +55,9 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Productos</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="ventas/index.php">Ventas</a></li>
+                    <!--li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="ventas/index.php">Ventas</a></li-->
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre Nosotros</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contactanos</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#whatsapp">Contáctanos</a></li>
                 </ul>
             </div>
         </div>
@@ -123,8 +123,8 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
 
                 <div class="content read">
 
-                    <a href="create.php" class="create-contact">Create Contact</a>
-                    <table class="mt-4">
+
+                    <table class="mt-4" id="tabla">
                         <thead>
                             <tr>
                                 <td>#</td>
@@ -141,27 +141,27 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                         </thead>
                         <tbody>
                             <!--?php print_r(array_values($contacts));?-->
-                            <?php print_r($contacts[0]['c2']) ?>
-                            <?php print_r($contacts[0]['margen']) ?>
+
                             <!--?php var_dump($pp['margen'])?-->
 
                             <?php foreach ($contacts as $contact => $pp) : ?>
-                                <tr>
-                                    <td><?= $pp['id'] ?></td>
-                                    <td><?= $pp['nombre'] ?></td>
-                                    <td><?= round((($pp['c1'] + $contacts[0]['c1']) * ($pp['margen'] / 100) + ($pp['c1'] + $contacts[0]['c1']))) ?></td>
-                                    <td><?= round((($pp['c2'] + $contacts[0]['c2']) * ($pp['margen'] / 100) + ($pp['c2'] + $contacts[0]['c2']))) ?></td>
-                                    <td><?= round((($pp['c3'] + $contacts[0]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $contacts[0]['c3']))) ?></td>
-                                    <td><?= round((($pp['c4'] + $contacts[0]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $contacts[0]['c4']))) ?></td>
-                                    <td><?= round((($pp['c5'] + $contacts[0]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $contacts[0]['c5']))) ?></td>
-                                    <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." /></td>
+                                <?php if ($pp['nombre'] != 'Bolsa') : ?>
+                                    <tr>
+                                        <td><?= $pp['id'] ?></td>
+                                        <td><?= $pp['nombre'] ?></td>
+                                        <td>$<?= number_format( round((($pp['c1'] + $contacts[0]['c1']) * ($pp['margen'] / 100) + ($pp['c1'] + $contacts[0]['c1']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c2'] + $contacts[0]['c2']) * ($pp['margen'] / 100) + ($pp['c2'] + $contacts[0]['c2']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c3'] + $contacts[0]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $contacts[0]['c3']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c4'] + $contacts[0]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $contacts[0]['c4']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c5'] + $contacts[0]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $contacts[0]['c5']))),2 ) ?></td>
+                                        <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." /></td>
 
-                                    <td class="actions">
-                                        <a href="#" class="edit" title="Para realizar su compra dar clik y contactar por whatsApp" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-cart-shopping"></i></a>
-
-                                    </td>
-                                </tr>
-
+                                        <td class="actions">
+                                        <a class="btn btn-success btn-social mx-1" title="Para realizar su compra dar clik y contactar por whatsApp" href="https://wa.me/573118237370" target="_blank"><i class="fab fa-fw fa-whatsapp"></i></a>
+                                            <!--a href="#" class="edit" title="Para realizar su compra dar clik y contactar por whatsApp" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-cart-shopping"></i></a-->
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -214,87 +214,9 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
 
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="nuevoModal" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="nuevoModalLabel">Comprar</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center pb-5">
-                    <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Comprar</h2>
-                                    
-                                    <div class="col-xs-4">
-          <h3>Facturado a:</h3>
-          <br>
-          <strong>Cliente:</strong>
-
-          <ul class="list-unstyled">
-            <select class="form-control" name="cliente" id="consulCliente">
-              <option value="" selected disabled>Seleccione el Cliente...</option>
-              <?php foreach ($contacts as $fila) : ?>
-                <option value="<?php echo $fila['id'] ?>"> <?php echo $fila['nombre']; ?> </option>
-              <?php endforeach; ?>
-            </select>
-          </ul>
-          <div class="col-xs-10">
-          </div>
-        </div>
-        <div class="col-xs-4">
-          <ul class="list-unstyled">
-            <div class="list-unstyled" id="consulta"></div>
-          </ul>
-        </div>
 
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                    <div class="modal-body text-center pb-5">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Log Cabin</h2>
-                                    <!-- Icon Divider-->
-                                    <div class="divider-custom">
-                                        <div class="divider-custom-line"></div>
-                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                        <div class="divider-custom-line"></div>
-                                    </div>
-                                    <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />
-                                    <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                                    <button class="btn btn-primary" data-bs-dismiss="modal">
-                                        <i class="fas fa-xmark fa-fw"></i>
-                                        Close Window
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
 
@@ -318,9 +240,9 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
+                <div class="col-lg-4 mb-5 mb-lg-0" id="whatsapp">
                     <h4 class="text-uppercase mb-4">Pedidos por</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://wa.me/573118237370"><i class="fab fa-fw fa-whatsapp"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://wa.me/573118237370" target="_blank"><i class="fab fa-fw fa-whatsapp"></i></a>
 
                 </div>
                 <!-- Footer About Text-->
@@ -346,7 +268,9 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
+    <script src="js/modal.js"></script>
     <script src="js/scripts.js"></script>
+
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <!-- * *                               SB Forms JS                               * *-->
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
@@ -355,4 +279,81 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
 
 </body>
 
+
 </html>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="nuevoModal" tabindex="-1" aria-labelledby="nuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="nuevoModalLabel">Calcular</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Calcular</h2>
+
+                            <div class="col-xs-4">
+
+
+                                <ul class="list-unstyled">
+                                    <select class="form-control" name="cliente" id="consulCliente">
+                                        <option value="" selected disabled>Seleccione el Cliente...</option>
+                                        <?php foreach ($contacts as $fila) : ?>
+                                            <option value="<?php echo $fila['id'] ?>"> <?php echo $fila['nombre']; ?> </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </ul>
+
+                                <div class="">
+                                    <form class="form-control w-50">
+                                        <div class="form-control border-white">
+                                            
+                                            <div class="form-control border-white">
+                                                <label for="">Id :</label>
+                                                <input type="text" class="form-control w-25">
+                                            </div>
+                                            <div class="form-control border-white">
+                                                <label for="">Nombre :</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                            <div class="form-control border-white">
+                                                <label for="">Price :</label>
+                                                <input type="number" class="form-control w-25">
+                                            </div>
+                                            <div class="form-control border-white">
+                                                <label for="">Quantity :</label>
+                                                <input type="number" class="form-control w-25">
+                                            </div>
+                                            <div class="form-control border-white">
+                                                <button class="btn btn-primary">Save!</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <ul class="list-unstyled">
+                                    <div class="list-unstyled" id="consulta"></div>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
