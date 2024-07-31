@@ -17,10 +17,11 @@ $stmt->bindValue(':current_page', ($page - 1) * $records_per_page, PDO::PARAM_IN
 $stmt->bindValue(':record_per_page', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
 // Fetch the records so we can display them in our template.
-$contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the total number of contacts, this is so we can determine whether there should be a next and previous button
 $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
+$productos2 = $pdo->query('select * from (SELECT m.id,m.nombre,sum(m.50g) as c1,sum(m.125g) c2,sum(m.250g) as c3,sum(m.500g) as c4,sum(m.1000g) as c5,m.tipo as t,0 as margen FROM materiales m group by m.tipo UNION SELECT p.id,p.nombre, p.50g,p.125g,p.250g,p.500g,p.1000g, p.img ,p.margen as margen FROM productos p) as todo')->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <html lang="en">
 
@@ -87,13 +88,13 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="assets/img/productos/varios_carrousel.jpg" class="d-block w-100" alt="..." />
                 </div>
                 <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="assets/img/productos/canela_carrousel.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="assets/img/productos/arandano_deshidratado_carrousel.jpg" class="d-block w-100" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -110,20 +111,98 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Productos</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"><img class="masthead-avatar mb-5" src="assets/img/productos/varios.jpg" alt="..." /></h2>
             <!-- Icon Divider-->
-            <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div>
-            </div>
+         
             <!-- Portfolio Grid Items-->
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            Empaque café
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+
+                            <div class="row justify-content-center">
+                                <!-- Portfolio Item 1-->
+                                <div class="content read table-responsive scrollme">
+                                    <table class="mt-4" id="tabla">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>Nombre</td>
+                                                <td>50g</td>
+                                                <td>125G</td>
+                                                <td>250G</td>
+                                                <td>500G</td>
+                                                <td>1000G</td>
+                                                <td>IMG</td>
+
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--?php print_r(array_values($productos));?-->
+
+                                            <!--?php var_dump($productos2)?-->
+
+                                            <?php foreach ($productos as $prods => $pp) : ?>
+
+                                                <!--?php echo ($productos2[1]['c1'])?-->
+                                                <?php if ($pp['nombre'] != 'Bolsa') : ?>
+
+                                                    <tr>
+                                                        <td><?= $pp['id'] ?></td>
+                                                        <td><?= $pp['nombre'] ?></td>
+                                                        <td>$<?= number_format(round((($pp['c1'] + $productos2[0]['c1']) * ($pp['margen'] / 100) + ($pp['c1'] + $productos2[0]['c1']))), 2) ?></td>
+                                                        <td>$<?= number_format(round((($pp['c2'] + $productos2[0]['c2']) * ($pp['margen'] / 100) + ($pp['c2'] + $productos2[0]['c2']))), 2) ?></td>
+                                                        <td>$<?= number_format(round((($pp['c3'] + $productos2[0]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $productos2[0]['c3']))), 2) ?></td>
+                                                        <td>$<?= number_format(round((($pp['c4'] + $productos2[0]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $productos2[0]['c4']))), 2) ?></td>
+                                                        <td>$<?= number_format(round((($pp['c5'] + $productos2[0]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $productos2[0]['c5']))), 2) ?></td>
+                                                        <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." width="70" height="70" /></td>
+
+                                                        <td class="actions">
+                                                            <a class="btn btn-success btn-social mx-1" title="Para realizar su compra dar clik y contactar por whatsApp" href="https://wa.me/573118237370" target="_blank"><i class="fab fa-fw fa-whatsapp"></i></a>
+                                                            <!--a href="#" class="edit" title="Para realizar su compra dar clik y contactar por whatsApp" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-cart-shopping"></i></a-->
+                                                        </td>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+
+
+                                    <div class="pagination">
+                                        <?php if ($page > 1) : ?>
+                                            <a href="index.php?page=<?= $page - 1 ?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
+                                        <?php endif; ?>
+                                        <?php if ($page * $records_per_page < $num_contacts) : ?>
+                                            <a href="index.php?page=<?= $page + 1 ?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
+                                        <?php endif; ?>
+                                    </div>
+                                    <a href=index.php>Inicio</a>
+                                </div>
+                                <?= template_footer() ?>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            Empaque transparente
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
-
                 <div class="content read">
-
-
                     <table class="mt-4" id="tabla">
                         <thead>
                             <tr>
@@ -140,20 +219,23 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                             </tr>
                         </thead>
                         <tbody>
-                            <!--?php print_r(array_values($contacts));?-->
+                            <!--?php print_r(array_values($productos));?-->
 
-                            <!--?php var_dump($pp['margen'])?-->
+                            <!--?php var_dump($productos2)?-->
+                            
+                            <?php foreach ($productos as $prods => $pp) : ?>
 
-                            <?php foreach ($contacts as $contact => $pp) : ?>
+                                <!--?php echo ($productos2[1]['c1'])?-->
                                 <?php if ($pp['nombre'] != 'Bolsa') : ?>
+                                                                        
                                     <tr>
                                         <td><?= $pp['id'] ?></td>
                                         <td><?= $pp['nombre'] ?></td>
-                                        <td>$<?= number_format( round((($pp['c1'] + $contacts[0]['c1']) * ($pp['margen'] / 100) + ($pp['c1'] + $contacts[0]['c1']))),2 ) ?></td>
-                                        <td>$<?= number_format(round((($pp['c2'] + $contacts[0]['c2']) * ($pp['margen'] / 100) + ($pp['c2'] + $contacts[0]['c2']))),2 ) ?></td>
-                                        <td>$<?= number_format(round((($pp['c3'] + $contacts[0]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $contacts[0]['c3']))),2 ) ?></td>
-                                        <td>$<?= number_format(round((($pp['c4'] + $contacts[0]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $contacts[0]['c4']))),2 ) ?></td>
-                                        <td>$<?= number_format(round((($pp['c5'] + $contacts[0]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $contacts[0]['c5']))),2 ) ?></td>
+                                        <td>$<?= number_format( round((($pp['c1'] + $productos2[1]['c1']) * ($pp['margen'] / 100) + ($pp['c1'] + $productos2[1]['c1']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c2'] + $productos2[1]['c2']) * ($pp['margen'] / 100) + ($pp['c2'] + $productos2[1]['c2']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c3'] + $productos2[1]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $productos2[1]['c3']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c4'] + $productos2[1]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $productos2[1]['c4']))),2 ) ?></td>
+                                        <td>$<?= number_format(round((($pp['c5'] + $productos2[1]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $productos2[1]['c5']))),2 ) ?></td>
                                         <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." /></td>
 
                                         <td class="actions">
@@ -180,6 +262,13 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                 <?= template_footer() ?>
 
             </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
     </section>
     <!-- About Section-->
     <section class="page-section bg-primary text-white mb-0" id="about">
@@ -306,7 +395,7 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                                 <ul class="list-unstyled">
                                     <select class="form-control" name="cliente" id="consulCliente">
                                         <option value="" selected disabled>Seleccione el Cliente...</option>
-                                        <?php foreach ($contacts as $fila) : ?>
+                                        <?php foreach ($productos as $fila) : ?>
                                             <option value="<?php echo $fila['id'] ?>"> <?php echo $fila['nombre']; ?> </option>
                                         <?php endforeach; ?>
                                     </select>
@@ -315,7 +404,7 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM productos')->fetchColumn();
                                 <div class="">
                                     <form class="form-control w-50">
                                         <div class="form-control border-white">
-                                            
+
                                             <div class="form-control border-white">
                                                 <label for="">Id :</label>
                                                 <input type="text" class="form-control w-25">
