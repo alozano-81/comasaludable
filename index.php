@@ -202,7 +202,7 @@ $productos2 = $pdo->query('select * from (SELECT m.id,m.nombre,sum(m.50g) as c1,
                             
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
-                <div class="content read">
+                <div class="content read table-responsive scrollme" >
                     <table class="mt-4" id="tabla">
                         <thead>
                             <tr>
@@ -236,7 +236,7 @@ $productos2 = $pdo->query('select * from (SELECT m.id,m.nombre,sum(m.50g) as c1,
                                         <td>$<?= number_format(round((($pp['c3'] + $productos2[1]['c3']) * ($pp['margen'] / 100) + ($pp['c3'] + $productos2[1]['c3']))),2 ) ?></td>
                                         <td>$<?= number_format(round((($pp['c4'] + $productos2[1]['c4']) * ($pp['margen'] / 100) + ($pp['c4'] + $productos2[1]['c4']))),2 ) ?></td>
                                         <td>$<?= number_format(round((($pp['c5'] + $productos2[1]['c5']) * ($pp['margen'] / 100) + ($pp['c5'] + $productos2[1]['c5']))),2 ) ?></td>
-                                        <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." /></td>
+                                        <td><img class="masthead-avatar mb-5" src="<?= $pp['t'] ?>" alt="..." width="70" height="70" /></td>
 
                                         <td class="actions">
                                         <a class="btn btn-success btn-social mx-1" title="Para realizar su compra dar clik y contactar por whatsApp" href="https://wa.me/573118237370" target="_blank"><i class="fab fa-fw fa-whatsapp"></i></a>
