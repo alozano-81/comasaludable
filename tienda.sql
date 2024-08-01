@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-07-2024 a las 23:39:28
+-- Tiempo de generación: 01-08-2024 a las 22:10:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -66,8 +66,19 @@ CREATE TABLE `materiales` (
   `250g` int(11) NOT NULL,
   `500g` int(11) NOT NULL,
   `1000g` int(11) NOT NULL,
-  `tipo` int(11) NOT NULL
+  `tipo` int(11) NOT NULL,
+  `ruta` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `materiales`
+--
+
+INSERT INTO `materiales` (`id`, `nombre`, `50g`, `125g`, `250g`, `500g`, `1000g`, `tipo`, `ruta`) VALUES
+(1, 'Bolsa', 640, 740, 1080, 1260, 1380, 1, 'assets\\img\\productos\\ajonjoli.jpg'),
+(2, 'Sticker', 50, 50, 50, 50, 50, 1, ''),
+(3, 'Bolsa', 70, 70, 70, 70, 70, 2, ''),
+(4, 'Sticker', 50, 50, 50, 50, 50, 2, '');
 
 -- --------------------------------------------------------
 
@@ -3854,8 +3865,12 @@ CREATE TABLE `oc_session` (
 --
 
 INSERT INTO `oc_session` (`session_id`, `data`, `expire`) VALUES
+('04c3975426e747d7ca684f5b6f', '{\"currency\":\"USD\"}', '2024-07-13 22:12:36'),
+('0a322ca2a9ef6e5c3bc112a0ed', '{\"currency\":\"USD\"}', '2024-07-13 22:13:43'),
+('2139d65acadcf3a15d142e5d59', '{\"currency\":\"USD\"}', '2024-07-13 22:12:53'),
 ('28311a9d137298bb7a870348d2', '{\"currency\":\"USD\"}', '2024-07-13 21:23:48'),
-('ba4271e72dab5c9b246a8e17cf', '{\"currency\":\"USD\",\"login_token\":\"4bde74897ae76a9b453fa1f4f9661e34\"}', '2024-07-05 16:43:38');
+('4680aa6d5920997f8531ea93d5', '{\"currency\":\"USD\"}', '2024-07-13 22:13:05'),
+('a20a94975e61bc3fb64a49e36d', '{\"currency\":\"USD\"}', '2024-07-16 02:20:43');
 
 -- --------------------------------------------------------
 
@@ -8982,8 +8997,52 @@ CREATE TABLE `productos` (
   `250g` int(11) NOT NULL,
   `500g` int(11) NOT NULL,
   `1000g` int(11) NOT NULL,
-  `img` varchar(250) NOT NULL
+  `img` varchar(250) NOT NULL,
+  `margen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='productos por gramos calculo de costo por margen';
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `nombre`, `50g`, `125g`, `250g`, `500g`, `1000g`, `img`, `margen`) VALUES
+(1, 'AJONJOLI DESCORTEZADO', 800, 2000, 4000, 8000, 16000, 'assets\\img\\productos\\ajonjoli.jpg', 35),
+(2, 'ALMENDRA ENTERA NON PARELI', 1411, 3527, 7055, 14109, 28219, 'assets\\img\\productos\\almendras.jpg', 35),
+(3, 'ALMENDRA LAMINADA', 2160, 5401, 10802, 21605, 43210, 'assets\\img\\productos\\almendra_laminada.jpg', 35),
+(4, 'ARANDANO DESHIDRATADO', 1190, 2976, 5952, 11905, 23810, 'assets\\img\\productos\\arandanos.jpg', 35),
+(5, 'BICARBONATO', 140, 350, 700, 1400, 2800, 'assets\\img\\productos\\', 35),
+(6, 'CANELA * BULTO 25 KG', 3550, 8875, 17750, 35500, 71000, 'assets\\img\\productos\\canela.jpg', 35),
+(7, 'CANELA * CAJA 10 KG', 3650, 9125, 18250, 36500, 73000, 'assets\\img\\productos\\canela.jpg', 35),
+(8, 'CIRUELA PASA', 1075, 2688, 5375, 10750, 21500, 'assets\\img\\productos\\ciruela_pasa.jpg', 35),
+(9, 'HARINA DE ALMENDRA BCA', 2150, 5375, 10750, 21500, 43000, 'assets\\img\\productos\\', 35),
+(10, 'LINAZA ENTERA', 310, 775, 1550, 3100, 6200, 'assets\\img\\productos\\', 35),
+(11, 'MANI CON PIEL BRASIL', 510, 1275, 2550, 5100, 10200, 'assets\\img\\productos\\', 35),
+(12, 'MANI SIN PIEL ENTERO BRASIL', 0, 0, 0, 0, 0, 'assets\\img\\productos\\', 35),
+(13, 'MANI SIN PIEL SPLIT BRASIL', 525, 1313, 2625, 5250, 10500, 'assets\\img\\productos\\', 35),
+(15, 'BICARBONATO', 140, 350, 700, 1400, 2800, 'assets\\img\\productos\\', 35),
+(16, 'CANELA * BULTO 25 KG', 3550, 8875, 17750, 35500, 71000, 'assets\\img\\productos\\', 35),
+(17, 'CANELA * CAJA 10 KG', 3650, 9125, 18250, 36500, 73000, 'assets\\img\\productos\\', 35),
+(18, 'CIRUELA PASA', 1075, 2688, 5375, 10750, 21500, 'assets\\img\\productos\\', 35),
+(19, 'HARINA DE ALMENDRA BCA', 2150, 5375, 10750, 21500, 43000, 'assets\\img\\productos\\', 35),
+(20, 'LINAZA ENTERA', 310, 775, 1550, 3100, 6200, 'assets\\img\\productos\\', 35),
+(21, 'MANI CON PIEL BRASIL', 510, 1275, 2550, 5100, 10200, 'assets\\img\\productos\\', 35),
+(22, 'MANI SIN PIEL ENTERO BRASIL', 0, 0, 0, 0, 0, 'assets\\img\\productos\\', 35),
+(23, 'MANI SIN PIEL SPLIT BRASIL', 525, 1313, 2625, 5250, 10500, 'assets\\img\\productos\\', 35),
+(24, 'MANI TOSTADO SIN SAL SIN PIEL MITADES', 550, 1375, 2750, 5500, 11000, 'assets\\img\\productos\\', 35),
+(25, 'SEMILLA CHÌA NEGRA ARGENTINA', 750, 1875, 3750, 7500, 15000, 'assets\\img\\productos\\', 35),
+(26, 'SEMILLA CHÌA CAFÉ', 700, 1750, 3500, 7000, 14000, 'assets\\img\\productos\\', 35),
+(27, 'UVA PASA FLAME CHILE SWEETVALLEY', 450, 1125, 2250, 4500, 9000, 'assets\\img\\productos\\uvapasa_carrousel.jpg', 35),
+(28, 'UVA PASA FLAME ARGENTINA NATURAL FOODS', 460, 1150, 2300, 4600, 9200, 'assets\\img\\productos\\', 35),
+(29, 'AVENA HOJUELAS - BULTO', 196, 490, 980, 1960, 3920, 'assets\\img\\productos\\avena.jpg', 35),
+(30, 'GARBANZO - BULTO', 462, 1155, 2310, 4620, 9240, 'assets\\img\\productos\\garbanzo.JPG', 35),
+(31, 'LENTEJA - BULTO', 335, 838, 1675, 3350, 6700, 'assets\\img\\productos\\lentejas.JPG', 35),
+(32, 'FRIJOL CARCAMANTO - BULTO', 610, 1525, 3050, 6100, 12200, '', 35),
+(35, 'ALVERJA - BULTO', 234, 585, 1170, 2340, 4600, 'assets\\img\\productos\\arveja.JPG', 35),
+(36, 'AVENA PANCHO BULTO * 12 KG', 217, 542, 1083, 2167, 4333, 'assets\\img\\productos\\avena.jpg', 35),
+(37, 'GARBANZO - BULTO 2', 468, 1170, 2340, 4680, 9360, 'assets\\img\\productos\\garbanzo.JPG', 35),
+(38, 'LENTEJA - BULTO 2', 341, 853, 1706, 3412, 6824, 'assets\\img\\productos\\lentejas.JPG', 35),
+(39, 'PETO - BULTO', 109, 273, 546, 1092, 2184, 'assets\\img\\productos\\maizPeto.JPG', 35),
+(40, 'ARVERJA - BULTO 2', 240, 600, 1200, 2400, 4800, 'assets\\img\\productos\\arveja.JPG', 35);
 
 -- --------------------------------------------------------
 
@@ -9958,7 +10017,8 @@ ALTER TABLE `oc_zone_to_geo_zone`
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -9980,7 +10040,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de la tabla `materiales`
 --
 ALTER TABLE `materiales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `oc_address`
@@ -10622,7 +10682,7 @@ ALTER TABLE `oc_zone_to_geo_zone`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
